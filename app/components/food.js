@@ -13,7 +13,7 @@ export default class Food extends Component {
                 top: this.props.coords[1] * SQUARE_SIZE,
                 width: 20,
                 height: 20,
-                background: 'green',
+                backgroundColor: 'green',
                 position: 'absolute'
             }
         });

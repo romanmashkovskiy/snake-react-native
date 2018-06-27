@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {SQUARE_SIZE} from "../constants";
-import {StyleSheet} from "react-native";
+import { View, Text } from "react-native";
 
 
 export default class Score extends Component {
@@ -9,7 +9,9 @@ export default class Score extends Component {
 
         return (
             <View>
-                {this.props.score}
+                <Text>
+                    SCORE: {this.props.score}
+                </Text>
             </View>
         );
     }

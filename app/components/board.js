@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
         height: 400,
         width: 400,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: 20
     },
     row: {
         height: 20,

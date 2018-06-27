@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import Board from '../components/board';
 import Food from '../components/food';
 import Score from '../components/score';
@@ -16,10 +16,14 @@ class Game extends Component {
         super(props);
         this.resetGame = this.resetGame.bind(this);
         this.moveGame = this.moveGame.bind(this);
+        this.onPressLeft = this.onPressLeft.bind(this);
+        this.onPressRight = this.onPressRight.bind(this);
+        this.onPressUp = this.onPressUp.bind(this);
+        this.onPressDown = this.onPressDown.bind(this);
+        this.onPressStart = this.onPressStart.bind(this);
     }
 
     componentWillMount() {
-        this.setControls();
         this.generateNewFood();
     }
 
@@ -77,71 +81,85 @@ class Game extends Component {
         }
     }
 
-    setControls() {
-        // document.addEventListener('keydown',e => {
-        //     const coords = this.props.snake.coords;
-        //     const x = coords[coords.length-1][0];
-        //     const y = coords[coords.length-1][1];
-        //
-        //
-        //     switch (e.code) {
-        //         case "KeyA":
-        //         case 'ArrowLeft':
-        //         {
-        //             if (this.props.snake.direction !== 'right' && x !== 0)
-        //                 this.props.setDirection('left');
-        //             break;
-        //         }
-        //         case "KeyD":
-        //         case 'ArrowRight':
-        //         {
-        //             if (this.props.snake.direction !== 'left' && x !== NUM_COLUMNS - 1)
-        //                 this.props.setDirection('right');
-        //             break;
-        //         }
-        //         case "KeyS":
-        //         case 'ArrowDown':
-        //         {
-        //             if (this.props.snake.direction !== 'up' && y !== NUM_ROWS - 1)
-        //                 this.props.setDirection('down');
-        //             break;
-        //         }
-        //         case "KeyW":
-        //         case 'ArrowUp':
-        //         {
-        //             if (this.props.snake.direction !== 'down' && y !== 0)
-        //                 this.props.setDirection('up');
-        //             break;
-        //         }
-        //         case 'Space':
-        //         {
-        //             if(this.props.game.lost) return false;
-        //             setTimeout(this.moveGame, this.props.game.speed);
-        //             break;
-        //         }
-        //         case 'F1':
-        //         {
-        //             e.preventDefault();
-        //             this.props.showHelp(true);
-        //             break;
-        //         }
-        //         case 'Escape':
-        //         {
-        //             this.props.showHelp(false);
-        //             break;
-        //         }
-        //     }
-        // })
+    onPressLeft() {
+        const coords = this.props.snake.coords;
+        const x = coords[coords.length-1][0];
+        if (this.props.snake.direction !== 'right' && x !== 0)
+        this.props.setDirection('left');
+    }
+
+    onPressRight() {
+        const coords = this.props.snake.coords;
+        const x = coords[coords.length-1][0];
+        if (this.props.snake.direction !== 'left' && x !== NUM_COLUMNS - 1)
+        this.props.setDirection('right');
+    }
+
+    onPressDown() {
+        const coords = this.props.snake.coords;
+        const y = coords[coords.length-1][1];
+        if (this.props.snake.direction !== 'up' && y !== NUM_ROWS - 1)
+        this.props.setDirection('down');
+    }
+
+    onPressUp() {
+        const coords = this.props.snake.coords;
+        const y = coords[coords.length-1][1];
+        if (this.props.snake.direction !== 'down' && y !== 0)
+        this.props.setDirection('up');
+    }
+
+    onPressStart() {
+        if(this.props.game.lost) return false;
+        setTimeout(this.moveGame, this.props.game.speed);
     }
 
     render() {
         return (
+            <View style={styles.container}>
+                <View style={styles.score}>
+                    <Score score={this.props.game.score}/>
+                </View>
 
                 <View style={styles.boardWrapper}>
                     <Board/>
-
+                    <Snake coords={this.props.snake.coords} lost={this.props.game.lost}/>
+                    <Food coords={this.props.food}/>
                 </View>
 
+                <View style={styles.buttonContainer}>
+                    {!this.props.game.lost &&<Button
+                        title="start"
+                        onPress={this.onPressStart}
+                    />}
+                    {this.props.game.lost && <Button
+                        title="reset"
+                        onPress={this.resetGame}
+                    />}
+                </View>
+
+
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="left"
+                        onPress={this.onPressLeft}
+                    />
+                    <Button
+                        title="right"
+                        onPress={this.onPressRight}
+                    />
+                </View>
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title="down"
+                        onPress={this.onPressDown}
+                    />
+                    <Button
+                        title="up"
+                        onPress={this.onPressUp}
+                    />
+                </View>
+            </View>
         );
     }
 }
@@ -170,12 +188,25 @@ function matchDispatchToProps (dispatch) {
 }
 
 const styles = StyleSheet.create({
+    container: {
+       flex: 1,
+       justifyContent: 'center'
+   },
+    score: {
+      alignSelf: 'center'
+    },
     boardWrapper: {
-        flex: 1,
-        paddingTop: 10,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        flexDirection: 'column'
+        width: 400,
+        height: 400,
+        flexDirection: 'column',
+        alignSelf: 'center',
+        position: 'relative'
+    },
+    buttonContainer: {
+        marginTop: 20,
+        marginBottom: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
     }
 });
 
