@@ -11,8 +11,8 @@ export default class Food extends Component {
             food: {
                 left: this.props.coords[0] * SQUARE_SIZE,
                 top: this.props.coords[1] * SQUARE_SIZE,
-                width: 20,
-                height: 20,
+                width: 15,
+                height: 15,
                 backgroundColor: 'green',
                 position: 'absolute'
             }

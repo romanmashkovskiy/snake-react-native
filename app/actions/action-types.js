@@ -6,4 +6,3 @@ export const NEW_GAME = 'NEW_GAME';
 export const LOSE_GAME = 'LOSE_GAME';
 export const INCREMENT_SCORE = 'INCREMENT_SCORE';
 export const INCREASE_SPEED = 'INCREASE_SPEED';
-export const SHOW_HELP = 'SHOW_HELP';

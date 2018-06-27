@@ -36,22 +36,22 @@ export default class Board extends Component {
 
 const styles = StyleSheet.create({
     board: {
-        height: 400,
-        width: 400,
+        height: 300,
+        width: 300,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 20
     },
     row: {
-        height: 20,
-        width: 400,
+        height: 15,
+        width: 300,
         alignItems: 'center',
         flexDirection: 'row',
     },
     cell: {
-        width: 20,
-        height: 20,
-        borderWidth: 1,
+        width: 15,
+        height: 15,
+        borderWidth: 0.5,
         borderStyle: 'solid',
         borderColor: 'black'
     }
